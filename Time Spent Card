@@ -1,0 +1,98 @@
+type: custom:mushroom-template-card
+primary: 'Time Spent '
+secondary: >-
+  Kevin Worked {{ states('sensor.kevin_time_worked_this_week') }} hours in the
+  past week
+
+  Chelsea Worked {{ states('sensor.chelsea_time_at_work_past_7_days') }} hours
+  in the past week
+icon: mdi:clock
+fill_container: true
+multiline_secondary: true
+
+type: custom:stack-in-card
+cards:
+  - type: custom:mushroom-title-card
+    title: Dad's Time
+  - type: custom:mini-graph-card
+    entities:
+      - entity: sensor.kevin_time_worked_this_week
+        show_line: true
+    hours_to_show: 168
+    points_per_hour: 1
+    line_width: 2
+    animate: true
+    color_thresholds:
+      - value: 40
+        color: '#CCFF00'
+      - value: 45
+        color: '#FFFF00'
+      - value: 50
+        color: '#FF9900'
+      - value: 55
+        color: '#FF3300'
+      - value: 60
+        color: FF0000
+    show:
+      name: false
+      icon: false
+      state: true
+      legend: false
+      extrema: false
+      labels: true
+      labels_secondary: true
+  - type: horizontal-stack
+    cards:
+      - type: button
+        tap_action:
+          action: null
+        entity: sensor.kevin_time_working_today
+        show_state: true
+        show_icon: false
+        name: Time Worked Today
+      - type: button
+        tap_action:
+          action: more-info
+        entity: sensor.kevin_time_worked_this_week
+        show_state: true
+        show_icon: false
+        name: Worked This Week
+      - type: button
+        tap_action:
+          action: null
+        entity: sensor.kevin_time_at_work_past_30_days
+        show_state: true
+        show_icon: false
+        name: Worked Past 30 Days
+  - type: horizontal-stack
+    cards:
+      - type: button
+        tap_action:
+          action: null
+        entity: sensor.kevin_home_today
+        show_state: true
+        show_icon: false
+        name: Time Home Today
+      - type: button
+        tap_action:
+          action: null
+        entity: sensor.kevin_time_home_past_7_days
+        show_state: true
+        show_icon: false
+        name: Home Past Week
+  - type: horizontal-stack
+    cards:
+      - type: button
+        tap_action:
+          action: null
+        entity: sensor.kevin_spent_driving_today
+        show_state: true
+        show_icon: false
+        name: Time Driving Today
+      - type: button
+        tap_action:
+          action: null
+        entity: sensor.kevin_spent_driving_past_7_days
+        show_icon: false
+        show_state: true
+        name: Time Driving Past 7 Days
