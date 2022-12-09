@@ -1,0 +1,241 @@
+type: vertical-stack
+cards:
+  - type: custom:stack-in-card
+    cards:
+      - type: picture-elements
+        elements:
+          - type: state-label
+            entity: sensor.coaster_range
+            prefix: 'Range '
+            style:
+              top: 93%
+              left: 84%
+              color: '#B7B7C0'
+          - type: state-label
+            entity: sensor.coaster_battery
+            style:
+              top: 8%
+              left: 16%
+              color: '#B7B7C0'
+          - type: state-icon
+            entity: sensor.coaster_battery
+            style:
+              rotate: 90deg
+              top: 8%
+              left: '-2%'
+              color: '#B7B7C0'
+          - type: state-label
+            entity: sensor.coaster_temperature_outside
+            prefix: 'Outside '
+            style:
+              top: 7%
+              left: 86%
+              color: '#B7B7C0'
+          - type: state-label
+            entity: sensor.coaster_temperature_inside
+            prefix: 'Inside '
+            style:
+              top: 14%
+              left: 86%
+              color: '#B7B7C0'
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.coaster_parking_brake
+                state: 'on'
+            elements:
+              - type: state-icon
+                entity: binary_sensor.coaster_parking_brake
+                icon: mdi:car-brake-parking
+                style:
+                  top: 16%
+                  left: 8%
+                  color: red
+        image: /local/Tesla/base.jpg
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.coaster_battery
+        columns: '0'
+        entity_row: true
+        positions:
+          icon: 'off'
+          indicator: 'off'
+          name: 'off'
+          minmax: 'off'
+          value: 'off'
+        color: '#03fd73'
+        severity:
+          - from: '0'
+            to: '19'
+            color: '#930707'
+          - from: '20'
+            to: '40'
+            color: '#faff00'
+          - from: '50'
+            to: '79'
+            color: '#00ff3f'
+          - from: '80'
+            to: '100'
+            color: '#930707'
+        height: 5px
+  - type: custom:stack-in-card
+    cards:
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.coaster_battery
+            name: Coaster
+            show_line: true
+        hours_to_show: 72
+        points_per_hour: 1
+        line_width: 2
+        animate: true
+        color_thresholds:
+          - value: 20
+            color: '#db1414'
+          - value: 30
+            color: '#fcca03'
+          - value: 40
+            color: '#03fd73'
+          - value: 80
+            color: '#03fd73'
+          - value: 90
+            color: '#2398f7'
+        show:
+          name: true
+          icon: false
+          state: true
+          legend: false
+          extrema: false
+          labels: true
+          labels_secondary: true
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_tpms_front_left
+            show_state: true
+            show_icon: false
+            name: F L Tire
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_tpms_front_right
+            show_state: true
+            show_icon: false
+            name: F R Tire
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_tpms_rear_left
+            show_state: true
+            show_icon: false
+            name: R L Tire
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_tpms_rear_right
+            show_state: true
+            show_icon: false
+            name: R R Tire
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_state
+            show_state: true
+            show_icon: false
+            name: Status
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_battery
+            show_state: true
+            show_icon: false
+            name: Battery
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_range
+            show_state: true
+            show_icon: false
+            name: Range Est.
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_time_charge_complete
+            show_state: true
+            show_icon: false
+            name: Charge Complete
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_odometer
+            show_state: true
+            show_icon: false
+            name: Odometer
+          - type: button
+            tap_action:
+              action: toggle
+            entity: device_tracker.coaster_location_tracker
+            show_state: true
+            show_icon: false
+            name: Location
+          - type: button
+            tap_action:
+              action: more-info
+            entity: cover.coaster_charger_door
+            show_state: true
+            show_icon: false
+            name: Charge Port Door
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: more-info
+            entity: binary_sensor.coaster_charger
+            show_state: true
+            show_icon: false
+            name: Charger Power
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_charging_rate
+            show_icon: false
+            show_state: true
+            name: Charge Rate
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.coaster_energy_added
+            name: Energy Added
+            show_icon: false
+            show_state: true
+            show_name: true
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: more-info
+            entity: sensor.daily_miles
+            name: Daily Miles
+            show_icon: false
+            show_state: true
+            show_name: true
+          - type: button
+            tap_action:
+              action: toggle
+            entity: sensor.monthly_miles
+            name: Monthly Miles
+            show_icon: false
+            show_state: true
+            show_name: true
+      - type: glance
+        entities:
+          - entity: sensor.tesla_wall_connector_energy_cost
+            name: 24hr Cost
+        show_name: true
+        show_icon: false
+        show_state: true
