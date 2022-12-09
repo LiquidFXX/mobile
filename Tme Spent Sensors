@@ -1,0 +1,101 @@
+## Kevin Time At Work
+  - platform: history_stats
+    name: Kevin Time Working Today
+    entity_id: device_tracker.coaster_location_tracker
+    state: "Kevin Work"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+  - platform: history_stats
+    name: Kevin Time Worked This Week
+    entity_id: device_tracker.coaster_location_tracker
+    state: 'Kevin Work'
+    type: time
+    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
+    end: '{{ now() }}'
+
+
+  - platform: history_stats
+    name: Kevin Time at work (past 30 days)
+    entity_id: device_tracker.coaster_location_tracker
+    state: 'Kevin Work'
+    type: time
+    end: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+    duration:
+      days: 30
+
+  - platform: history_stats
+    name: Kevin Home Today
+    entity_id: device_tracker.coaster_location_tracker
+    state: "home"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+ 
+  - platform: history_stats
+    name: Kevin Time Home (past 7 days)
+    entity_id: device_tracker.coaster_location_tracker
+    state: 'home'
+    type: time
+    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
+    end: '{{ now() }}'
+ 
+  - platform: history_stats
+    name: Kevin Away Today
+    entity_id: device_tracker.coaster_location_tracker
+    state: "away"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+
+  - platform: history_stats
+    name: Kevin Time Away (past 7 days)
+    entity_id: device_tracker.coaster_location_tracker
+    state: 'away'
+    type: time
+    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
+    end: '{{ now() }}'
+
+  - platform: template
+    sensors:
+      kevin_time_home:
+        friendly_name: 'Kevin Time Home'
+        value_template: '{{states.sensor.kevin_time_home.attributes.value}}'    
+ 
+  - platform: template
+    sensors:
+      kevin_time_away:
+        friendly_name: 'Kevin Time Away'
+        value_template: '{{states.sensor.kevin_time_away.attributes.value}}'
+
+  - platform: template
+    sensors:
+      kevin_time_working:
+        friendly_name: 'Kevin Time Working'
+        value_template: '{{states.sensor.kevin_time_working.attributes.value}}'
+  
+  - platform: history_stats
+    name: Kevin Spent Driving Today
+    entity_id: binary_sensor.coaster_parking_brake
+    state: "off"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  
+  - platform: history_stats
+    name: Kevin Spent Driving (past 7 days)
+    entity_id: binary_sensor.coaster_parking_brake
+    state: "off"
+    type: time
+    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
+    end: '{{ now() }}'
+  
+  - platform: history_stats
+    name: Kevin Spent Driving (past 30 days)
+    entity_id: binary_sensor.coaster_parking_brake
+    state: "off"
+    type: time
+    end: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+    duration:
+      days: 30
